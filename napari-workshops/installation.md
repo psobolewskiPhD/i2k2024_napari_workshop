@@ -141,7 +141,7 @@ Once you have that set, you can skip to [the next section](setting-up-your-napar
    stop the notebook server.
 
     ```bash
-    jupyter notebook
+    jupyter lab
     ```
 
 5. Test your napari installation. Enter the command below and an empty napari

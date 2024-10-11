@@ -13,7 +13,7 @@ either downloading a .zip file (recommended for beginners) or cloning via git.
 ### Downloading a .zip file
 To download the notebooks as a .zip file, do the following:
 
-1. Click the GitHub logo at the top of this page or navigate your web browser to [the workshop's github repository](https://github.com/TheJacksonLaboratory/intro-napari-workshop): https://github.com/TheJacksonLaboratory/intro-napari-workshop
+1. Click the GitHub logo at the top of this page or navigate your web browser to [the workshop's github repository](https://github.com/psobolewskiPhD/i2k2024_napari_workshop): https://github.com/psobolewskiPhD/i2k2024_napari_workshop
 2. Click the green (or blue) "Code" button to open the download menu and then
    "Download ZIP" ![download code](./resources/download_code.png)
 3. Choose the location you would like to download the .zip into.
@@ -35,7 +35,7 @@ Then, clone the repository. This will download all of the files necessary for
 this tutorial.
 
  ```bash
- git clone https://github.com/napari/napari-workshop-template.git
+ git clone https://github.com/psobolewskiPhD/i2k2024_napari_workshop.git
  ```
 
 ## Install additional `jupytext` dependency
@@ -59,11 +59,10 @@ conda install jupytext jupyterlab-myst
 
 ## Launch the `jupyter lab` application
 
-Navigate to the `notebooks` subdirectory of the
-`intro-napari-workshop` directory you just downloaded.
+Navigate to the `napari-workshops` subdirectory of the `i2k2024_napari_workshops` directory you just downloaded.
 
 ```
-cd <path to intro-napari-workshop>/notebooks
+cd <path to i2k2024_napari_workshops>/napari-workshops
 ```
 
 Remember to activate the `napari-workshop` conda environment if you haven't already.
@@ -78,7 +77,7 @@ To start the Jupyter application, enter:
 jupyter lab
 ```
 
-The Jupyter interface will open in a browser window and you will see the notebooks
+The Jupyter interface will open in a browser window and you will see the `notebooks` folder
 in the file browser on the left.
 
 ````{important}
