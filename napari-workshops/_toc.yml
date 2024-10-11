@@ -10,12 +10,8 @@ chapters:
   - file: using_jupyter
   - file: notebook_setup
   - file: launching_binder
-- file: intro_napari_GUI
-- file: plugins
 - file: notebooks/index
   sections:
-  - file: notebooks/intro_bioimage_visualization
-  - file: notebooks/manual_annotation
   - file: notebooks/spot_detection
   - file: notebooks/spot_detection_functions
 - file: make_a_simple_plugin
