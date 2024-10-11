@@ -1,18 +1,17 @@
-# Introduction to napari workshop
-## The Jackson Laboratory
+# I2K 2024: Intermediate napari: from exploratory workflow to widgets
+
 **Peter Sobolewski**  
 Imaging Applications, Research IT  
+The Jackson Laboratory 
 napari core developer  
-April 23 & 30, 2024
 
 
-This site contains materials for the Introduction to `napari` workshop
-run at JAX on April 23 & 30, 2024.
+This repository contains materials for the "Intermediate `napari`: from exploratory workflow to widgets" workshop
+run at [I2K 2024](https://events.humantechnopole.it/event/1/contributions/58/)
 
-The slides for the introductory presentation can be accessed [here](https://thejacksonlaboratory.github.io/intro-napari-slides/).
+The workshop will involve live coding, showing how one can use a Jupyter notebook for exploratory data analysis in napari and then make simple widgets based on that. The target is someone who has some familiarity with the napari application and bioimage analysis in Python and wants to take the next steps to customize/extend the napari GUI. For this, magicgui will be introduced as a way to generate widgets quickly and easily.
 
 ## Colophon
 
-The basis for these workshop materials was the [`napari-workshops-template` project](https://github.com/napari/napari-workshop-template). 
-Some notebooks were removed and reorganized. Additionally, the `napari application` walkthrough was based on [material from a workshop](https://github.com/dgmccart/intro-to-napari-workshop) prepared by Dannielle McCarthy ([@dgmccart](https://github.com/dgmccart)), Sean Martin ([@seankmartin](https://github.com/seankmartin)), and Melissa Weber Mendonça ([@melissawm](https://github.com/melissawm)).
-For information on preparing your own workshop materials using the template, please see [the documentation for the `napari-workshops-template` repository](https://napari.org/napari-workshop-template/docs/build_your_workshop.html).
+The material is a part of a prior workshop that was run at JAX, which has more introductory material as well: [https://thejacksonlaboratory.github.io/intro-napari-workshop/](https://thejacksonlaboratory.github.io/intro-napari-workshop/). The basis for the workshop materials was the [`napari-workshops-template` project](https://github.com/napari/napari-workshop-template). 
+Some notebooks were removed and reorganized. For information on preparing your own workshop materials using the template, please see [the documentation for the `napari-workshops-template` repository](https://napari.org/napari-workshop-template/docs/build_your_workshop.html).
