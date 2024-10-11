@@ -1,24 +1,16 @@
 # Getting started
 
-This workshop will be a two-session introductory workshop to napari Python 
-visualization software. The first session will start with an introduction 
-to napari and the napari ecosystem. It will cover key concepts such as the 
-GUI layout, viewer and layer models, as well as the ability to bidirectionally 
-interact with napari from Python code. The second session will be focused on 
-more advanced concepts, such as plugins and customization.
+The workshop will involve live coding, showing how one can use a Jupyter notebook for exploratory data analysis in napari and then make simple widgets based on that. For this, magicgui will be introduced as a way to generate widgets quickly and easily.
 
 ## Audience
 
-The workshop is intended for people with some experience with (bio)image analysis and at least beginner experience with using the scientific Python ecosystem (numpy, scikit-image, etc.)
+The workshop is intended for people with some experience with (bio)image analysis and some familiarity with the napari application in Python who want to take the next steps to customize/extend the napari GUI. 
 
 ## Goals
-The aim of this workshop is to provide an introduction to bioimage analysis in
-Python and `napari`. By the end of the workshop you should be able to
-- use napari as an image viewer, including manipulating layers
-- une napari to annotate structures of interest
-- perform interactive analysis with napari in a
-  [jupyter notebook](https://jupyter.org/)
-- make use of the [napari plugin ecosystem](https://www.napari-hub.org/)
+The aim of this workshop is to provide an introduction to using `magicgui` to create widgets for `napari`, as well as using custom keybindings. By the end of the workshop, participants should be able to:
+- Use `magicgui` to convert functions into widgets for `napari`
+- Create custom keybindings for `napari` using `bind_key`
+- Use `napari` from a Jupyter notebook or script
 
 ## Pre-workshop setup
 
@@ -26,4 +18,4 @@ Before the workshop, please ensure you have an up-to-date `conda` installation a
 
 ## Workshop content
 
-The workshop consists of [introductory slides](https://thejacksonlaboratory.github.io/intro-napari-slides/), as well as code examples in notebooks. The executed and rendered notebooks are [included in this repository](notebooks/index.md). We strongly encourage you to follow along with your own, fresh notebook. However, if you would like to down load and execute the completed notebooks locally, please see [the instructions here](notebook_setup.md). Additionally, the completed notebooks can also be run in the cloud [using Binder](launching_binder.md).
+The executed and rendered notebooks are [included in this repository](notebooks/index.md). We strongly encourage you to follow along with your own, fresh notebook. However, if you would like to down load and execute the completed notebooks locally, please see [the instructions here](notebook_setup.md). Additionally, the completed notebooks can also be run in the cloud [using Binder](launching_binder.md).
