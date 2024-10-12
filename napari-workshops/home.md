@@ -1,5 +1,3 @@
-![JAX logo](./resources/JAX_logo_rgb_transparentback.png)
-
 # I2K 2024: Intermediate napari: from exploratory workflow to widgets
 
 **Peter Sobolewski**  
