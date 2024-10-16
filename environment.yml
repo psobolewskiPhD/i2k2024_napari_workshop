@@ -1,4 +1,4 @@
-name: workshop
+name: napari-workshop
 channels:
   - conda-forge
 dependencies:
