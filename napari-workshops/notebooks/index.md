@@ -1,6 +1,8 @@
 # Notebooks
 
-We encourage you to follow along with your own, fresh notebook, using the executed and rendered notebooks included in this repository only as a guide.
+We encourage you to follow along with your own, fresh notebook, using the executed and rendered notebooks included in this repository only as a guide.  
+
+The first notebook, [Exploratory analysis: spot detection](spot_detection), walks through a simple spot detection workflow using napari. The second notebook, [From workflow to widget: customizing napari](spot_detection_functions), builds on that and demonstrates how to convert the workflow into reusable widgets and a key-bound function.
 
 ## Contents
 

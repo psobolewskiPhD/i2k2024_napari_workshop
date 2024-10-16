@@ -17,7 +17,7 @@ The napari application uses a backend for the graphical user interface (GUI) cal
 
 There are a number of ways to go about creating your own widgets, you can see [an in-depth overview in the napari documentation](https://napari.org/dev/howtos/extending/magicgui.html). By far the simplest is to rely on the fact that napari supports the use of [`magicgui`](https://pyapp-kit.github.io/magicgui/), a Python library for quick and easy building of GUIs. A key feature of `magicgui` is autogeneration of GUIs from functions and dataclasses, by mapping Python type hints to widgets.
 
-In this module, we will implement elements of our previous workflow as functions and then use [`magicgui.magicgui`](https://pyapp-kit.github.io/magicgui/api/magicgui/#magicguimagicgui) decorator on those functions to return us compound widgets that we can use to make exploring the parameters easier in the GUI. For a nice overview of the `magicgui` decorators, see [the official documentation](https://pyapp-kit.github.io/magicgui/decorators/).
+In this module, we will implement elements of [the exploratory spot detection workflow](spot_detection) as functions and then use [`magicgui.magicgui`](https://pyapp-kit.github.io/magicgui/api/magicgui/#magicguimagicgui) decorator on those functions to return us compound widgets that we can use to make exploring the parameters easier in the GUI. For a nice overview of the `magicgui` decorators, see [the official documentation](https://pyapp-kit.github.io/magicgui/decorators/).
 
 ## `binder` setup
 
@@ -32,7 +32,7 @@ if 'BINDER_SERVICE_HOST' in os.environ:
 
 ## Loading data
 
-Let's get everything set up, based on the previous notebook:
+Let's get everything set up, for more information about this analysis, please see the [the exploratory spot detection notebook](spot_detection).
 
 ```{code-cell} ipython3
 from skimage import io
@@ -61,7 +61,7 @@ viewer.add_image(spots, colormap = 'I Orange', blending='minimum')
 ## A basic filtering function
 
 Now let's write a function that takes an array and a `sigma` value and performs the 
-high-pass operation.
+high-pass operation. For more information, please see the [the exploratory spot detection notebook](spot_detection#create-an-image-filter).
 
 ```{code-cell} ipython3
 import numpy as np
@@ -265,11 +265,14 @@ nbscreenshot(viewer)
 
 ## A more complex example
 
-Finally, lets make a widget for the whole workflow as a function. We will need to write a function
-and then properly annotate it such that `magicgui` can generate the widgets. This time we are also
-starting with image layer (data), but then we want a Points layer with points. We could again return 
-just the layer data using `napari.types.PointsData`. But lets get a nicer Points layer instead, so 
-we will return a LayerDataTuple.  
+Finally, lets make a widget for [the final spot detection workflow](spot_detection#detect-spots) 
+as a function. If you're curious about the `blob_log` function, please refer to the 
+[scikit-image documentation](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log).  
+
+We will need to write a function and then properly annotate it such that `magicgui`
+can generate the widgets. This time we are also starting with image layer (data), but then we want
+a Points layer with points. We could again return just the layer data using `napari.types.PointsData`. 
+But lets get a nicer Points layer instead, so we will return a LayerDataTuple.  
 
 If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
 the viewer using the data in the `LayerDataTuple`. Briefly:
