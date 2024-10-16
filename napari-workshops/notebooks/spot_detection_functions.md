@@ -383,12 +383,13 @@ For more details, on the two `magicgui` decorators, see [the official documentat
 
 napari has extensive keyboard shortcuts that can be customized in the Preferences/Settings GUI.
 However, it also enables you to bind key-press events to custom callback functions. Again, the 
-napari implementation (`bind_key`) is smart, so arguments like the viewer getting the key press or the current
-selected layer of a given time will be passed to your function.
+napari implementation (`bind_key`) is smart, so arguments like the viewer getting the key press 
+or the current selected layer will be passed to your function.
 
 Lets try a simple example, to get the number of Points returned by our detector when we press
 a key binding. For this, we will want the `bind_key` decorator to pass in a selected Points layer
-as an argument to our function that will return the number of detected spots.
+as an argument to our function that will return the number of detected spots. We only want this
+to work for Points layers—but any Points layer will do—so we will use the `@Points.bind_key` decorator.
 
 ```{code-cell} ipython3
 from napari.layers import Points
@@ -413,8 +414,9 @@ print_number_of_points(viewer.layers['Points'])
 ```
 
 ```{important}
-At the moment, `bind_key` shortcuts cannot overwrite napari builtin shortcuts, even with `overwrite=True`.
-Worse yet, this will silently fail, because the builtin napari keybinding *will* trigger.
+It is also possible to bind keybindings at the viewer level, using `@viewer.bind_key`. *However*, at the moment, `bind_key` 
+shortcuts using `@viewer` cannot overwrite napari *layer* shortcuts, even with `overwrite=True`. Worse yet, this will 
+silently fail, because the layer keybinding *will* trigger. Hence, it is best to use layer-specific keybindings.
 ```
 
 There are actually a number of other events that you can connect callbacks to, other than just key presses.
