@@ -392,21 +392,19 @@ as an argument to our function that will return the number of detected spots.
 
 ```{code-cell} ipython3
 from napari.layers import Points
+from napari.utils.notifications import show_info
 
 @Points.bind_key("Shift-D")
 def print_number_of_points(points_layer: "napari.layers.Points"):
-    print("Detected points: ", len(points_layer.data))
+    show_info(f"Detected points: {len(points_layer.data)}")
 
 ```
 
-Give it a shot in the viewer, you should get a print statement in the notebook, when you press the 
-keybinding with a Points layer selected, but not with any other layer type.
-
 ```{tip}
-We used `print`, so the output ends up in the notebook (or the terminal, REPL, etc.). To get something visible in the 
-viewer itself, you can use [`napari.utils.notifications.show_info`](https://napari.org/dev/api/napari.utils.notifications.html).
-However, be aware that this won't work when napari was launched from a Jupyter notebook (hopefully fixed in napari 0.5.0): nothing will
-happen.
+Instead of using `print`, we used [`napari.utils.notifications.show_info`](https://napari.org/dev/api/napari.utils.notifications.html),
+which will put the output in both the notebook (or the terminal, REPL, etc.), as well as in the viewer itself as a notification 
+in the bottom right corner. However, be aware that this won't work when napari was launched from a Jupyter notebook for napari 
+versions older than 0.5.0.
 ```
 
 Let's call the function to trigger it for the notebook:
