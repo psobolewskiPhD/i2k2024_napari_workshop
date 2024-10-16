@@ -408,10 +408,9 @@ in the bottom right corner. However, be aware that this won't work when napari w
 versions older than 0.5.0.
 ```
 
-Let's call the function to trigger it for the notebook:
+Let's call the function to trigger it for the notebook, so we see the output (unfortunately the notification will not be captured by `nbscreenshot`):
 ```{code-cell} ipython3
 print_number_of_points(viewer.layers['Points'])
-nbscreenshot(viewer)
 ```
 
 ```{important}
