@@ -411,6 +411,7 @@ versions older than 0.5.0.
 Let's call the function to trigger it for the notebook:
 ```{code-cell} ipython3
 print_number_of_points(viewer.layers['Points'])
+nbscreenshot(viewer)
 ```
 
 ```{important}
