@@ -2,7 +2,7 @@
 
 **Peter Sobolewski**  
 Imaging Applications, Research IT  
-The Jackson Laboratory 
+The Jackson Laboratory  
 napari core developer  
 
 
