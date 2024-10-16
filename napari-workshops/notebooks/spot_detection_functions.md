@@ -61,7 +61,7 @@ viewer.add_image(spots, colormap = 'I Orange', blending='minimum')
 ## A basic filtering function
 
 Now let's write a function that takes an array and a `sigma` value and performs the 
-high-pass operation. For more information, please see the [the exploratory spot detection notebook](spot_detection#create-an-image-filter).
+high-pass operation. For more information, please see the [the exploratory spot detection notebook](spot_detection.md#create-an-image-filter).
 
 ```{code-cell} ipython3
 import numpy as np
@@ -265,7 +265,7 @@ nbscreenshot(viewer)
 
 ## A more complex example
 
-Finally, lets make a widget for [the final spot detection workflow](spot_detection#detect-spots) 
+Finally, lets make a widget for [the final spot detection workflow](spot_detection.md#detect-spots) 
 as a function. If you're curious about the `blob_log` function, please refer to the 
 [scikit-image documentation](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log).  
 
