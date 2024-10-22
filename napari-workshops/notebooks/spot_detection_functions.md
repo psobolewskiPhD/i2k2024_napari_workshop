@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.1
+    jupytext_version: 1.16.4
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -266,45 +266,24 @@ nbscreenshot(viewer)
 ## A more complex example
 
 Finally, lets make a widget for [the final spot detection workflow](spot_detection.md#detect-spots) 
-as a function. If you're curious about the `blob_log` function, please refer to the 
-[scikit-image documentation](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log).  
+as a function. First, we need the spot detection function, here it already has basic type hinting 
+and a docstring to get us started:
 
-We will need to write a function and then properly annotate it such that `magicgui`
-can generate the widgets. This time we are also starting with image layer (data), but then we want
-a Points layer with points. We could again return just the layer data using `napari.types.PointsData`. 
-But lets get a nicer Points layer instead, so we will return a LayerDataTuple.  
-
-If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
-the viewer using the data in the `LayerDataTuple`. Briefly:
-- The layer data tuple should be: `(layer_data, layer_metadata, layer_type)`
-- `layer_data`: the data to be displayed in the new layer (i.e., the points
-      coordinates)
-- `layer_metadata`: the display options for the layer stored as a
-      dictionary. Some options to consider: `symbol`, `size`, `face_color`
-- `layer_type`: the name of the layer type as a string—in this case `'Points'`  
-
-For more information on using the `LayerDataTuple` type, please see [the documentation](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple).
-
-Also let's change the `image` argument type hint to `ImageLayer` so that we can access more
-properties if we'd like or be able to more easily set the value programmatically.
-
-```{code-cell} ipython3
-# again lets remove the previous widget
-viewer.window.remove_dock_widget("all")
+```{note}
+If you're curious about the `blob_log` function, please refer to the
+[scikit-image documentation](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log).
 ```
 
 ```{code-cell} ipython3
-import numpy as np
 from skimage.feature import blob_log
 
-@magicgui
 def detect_spots(
-        image: "napari.layers.Image",
+        image: np.ndarray,
         high_pass_sigma: float = 2,
         spot_threshold: float = 0.2,
         blob_sigma: float = 2
-        ) -> "napari.types.LayerDataTuple":
-    """Apply a gaussian high pass filter to an image.
+        ) -> tuple[np.ndarray, np.ndarray]:
+    """Apply a gaussian high pass filter and detect spots in an image.
 
     Parameters
     ----------
@@ -323,12 +302,93 @@ def detect_spots(
     
     Returns
     -------
-    points_coords : np.ndarray
-        An NxD array with the coordinate for each detected spot.
-        N is the number of spots and D is the number of dimensions.
-    sizes : np.ndarray
-        An array of size N, where N is the number of detected spots
-        with the diameter of each spot.
+    tuple[np.ndarray, np.ndarray]
+        A tuple containing:
+        - points_coords: An NxD array with the coordinate for each detected spot.
+          N is the number of spots and D is the number of dimensions.
+        - sizes: An array of size N, where N is the number of detected spots
+          with the diameter of each spot.
+    
+    """
+    # filter the image layer data
+    filtered_spots = gaussian_high_pass(image, high_pass_sigma)
+
+    # detect the spots on the filtered image
+    blobs_log = blob_log(
+        filtered_spots,
+        max_sigma=blob_sigma,
+        threshold=None,
+        threshold_rel=spot_threshold
+    )
+    
+    # convert the output of the blob detector to the 
+    # desired points_coords and sizes arrays
+    # (see the docstring for details)
+    points_coords = blobs_log[:, :2]
+    sizes = 2 * np.sqrt(2) * blobs_log[:, 2]
+
+    return points_coords, sizes
+```
+
+We will need to properly annotate this function such that `magicgui`
+can generate the widgets. This time we are also starting with image layer (data), but then we want
+a Points layer with points. We could again return just the layer data using `napari.types.PointsData`, 
+but lets get a nicer Points layer instead; we will tweak the return to return a `LayerDataTuple`.  
+
+If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
+the viewer using the data in the `LayerDataTuple`. Briefly:
+- The layer data tuple should be: `(layer_data, layer_metadata, layer_type)`
+- `layer_data`: the data to be displayed in the new layer (i.e., the points coordinates)
+- `layer_metadata`: the display options for the layer stored as a
+      dictionary. Some options to consider: `symbol`, `size`, `face_color`
+- `layer_type`: the name of the layer type as a string—in this case `'Points'`  
+
+```{tip}
+For more information on using the `LayerDataTuple` type, please see [the documentation](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple).
+```
+
+Also let's change the `image` argument type hint to `ImageLayer` so that we can access more
+properties if we'd like or be able to more easily set the value programmatically.
+
+```{code-cell} ipython3
+# again lets remove the previous widget
+viewer.window.remove_dock_widget("all")
+```
+
+```{code-cell} ipython3
+from skimage.feature import blob_log
+
+@magicgui
+def detect_spots_widget(
+        image: "napari.layers.Image",
+        high_pass_sigma: float = 2,
+        spot_threshold: float = 0.2,
+        blob_sigma: float = 2
+        ) -> "napari.types.LayerDataTuple":
+    """Apply a gaussian high pass filter and detect spots in an image.
+
+    Parameters
+    ----------
+    image : napari.layers.Image
+        The Image layer in which to detect the spots.
+    high_pass_sigma : float
+        The sigma (width) of the gaussian filter to be applied.
+        The default value is 2.
+    spot_threshold : float
+        The relative threshold to be passed to the blob detector.
+        The default value is 0.2.
+    blob_sigma: float
+        The expected sigma (width) of the spots. This parameter
+        is passed to the "max_sigma" parameter of the blob
+        detector.
+    
+    Returns
+    -------
+    napari.types.LayerDataTuple
+        A Layer Data Tuple for a Points layer containing
+        - the coordinates of the detected points (data)
+        - a dictionary of layer meta data (sizes and face_color)
+        - the layer type, "Points"
     
     """
     # filter the image layer data
@@ -352,19 +412,19 @@ def detect_spots(
 ```
 
 ```{code-cell} ipython3
-viewer.window.add_dock_widget(detect_spots)
+viewer.window.add_dock_widget(detect_spots_widget)
 ```
 
 ```{code-cell} ipython3
 :tags: ["hide-output"]
 
 # let's call the widget/function to simulate pressing run
-detect_spots(viewer.layers['spots'])
+detect_spots_widget(viewer.layers['spots'])
 ```
 
 ```{code-cell} ipython3
 # lets set the dropdown value for the screenshot
-detect_spots.image.value = viewer.layers['spots']
+detect_spots_widget.image.value = viewer.layers['spots']
 
 # and lets zoom in a bit
 viewer.camera.center = (200, 270)
@@ -398,7 +458,6 @@ from napari.utils.notifications import show_info
 @Points.bind_key("Shift-D")
 def print_number_of_points(points_layer: "napari.layers.Points"):
     show_info(f"Detected points: {len(points_layer.data)}")
-
 ```
 
 ```{tip}
@@ -409,6 +468,7 @@ versions older than 0.5.0.
 ```
 
 Let's call the function to trigger it for the notebook, so we see the output (unfortunately the notification will not be captured by `nbscreenshot`):
+
 ```{code-cell} ipython3
 print_number_of_points(viewer.layers['Points'])
 ```
